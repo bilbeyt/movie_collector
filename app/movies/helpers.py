@@ -17,8 +17,8 @@ def collect_movies():
         movies = movie_client.collect()
         fetched_at = datetime.now().isoformat()
         info = {
-            "fetched_at": fetched_at,
-            "movies": movies
+            'fetched_at': fetched_at,
+            'movies': movies
         }
-        cache.set("movies_info", info, timeout=60)
+        cache.set('movies_info', info, timeout=60)
     return info

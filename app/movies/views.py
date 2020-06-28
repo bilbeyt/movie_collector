@@ -1,6 +1,8 @@
 """This module includes views of movies app"""
 from flask import Blueprint, render_template
 from app.movies.helpers import collect_movies
+from app import app
+
 
 movies = Blueprint('movies', __name__)
 
@@ -16,3 +18,6 @@ def get_movies():
     return render_template('movies.html',
                            movies=info['movies'],
                            fetched_at=info['fetched_at'])
+
+
+app.register_blueprint(movies)

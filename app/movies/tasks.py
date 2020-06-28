@@ -7,12 +7,12 @@ from app import cache
 
 logger = logging.getLogger(__name__)
 
-@celery.task(name="movie_collector")
+@celery.task(name='movie_collector')
 def get_movies():
     """This function is collecting movies and refreshes cache"""
-    logger.info("Movie update task started!")
+    logger.info('Movie update task started!')
     cache.delete('movies_info')
     info = collect_movies()
     socketio.emit('update_movies', info,
-                  namespace="/movies/stream")
-    logger.info("Movies updated!")
+                  namespace='/movies/stream')
+    logger.info('Movies updated!')

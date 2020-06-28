@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Movies</h2>
+<p id="fetched_at">Fetched At: {{ fetched_at }}</p>
+<p>Click movie name to see people!</p>
+<div id="movies">
+    {% if movies.items() %}
+    <div class="accordion" id="movies_body">
+        {% for movie in movies.values() %}
+            <div class="card">
+                <div class="card-header" id="heading-{{ loop.index }}">
+                    <h2 class="mb-0">
+                        <button 
+                            class="btn btn-link collapsed"
+                            type="button"
+                            data-toggle="collapse"
+                            data-target="#collapse-{{ loop.index }}"
+                            aria-expanded="false"
+                            aria-controls="collapse-{{ loop.index }}"
+                        >
+                            {{ movie.title }} - {{ movie.release_date }}                
+                        </button>
+                    </h2>
+                </div>
+                <div 
+                    id="collapse-{{ loop.index }}"
+                    class="collapse"
+                    aria-labelledby="heading-{{ loop.index }}"
+                    data-parent="#movies_body"
+                >
+                    <div class="card-body">
+                        {% if movie.people %}
+                            <ul class="people-list">
+                                {% for people in movie.people %}
+                                    <li>{{ people }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p>People Not Found!</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="card">
+        <div class="card-header">
+            Movies Not Found
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="/static/js/movies.js"></script>
+{% endblock %}
